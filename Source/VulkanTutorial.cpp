@@ -7,28 +7,21 @@
 #include <fstream>
 #include <iostream>
 
-class HelloTriangleApplication
-{
-public:
-    void Run()
-    {
-        std::cout << "Running app" << std::endl;
-    }
-};
-
 int main()
 {
-    HelloTriangleApplication app;
+    glfwInit();
 
-    try
-    {
-        app.Run();
-    }
-    catch (const std::exception& anException)
-    {
-        std::cerr << anException.what() << std::endl;
-        return EXIT_FAILURE;
-    }
+    glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
+    GLFWwindow* window = glfwCreateWindow(800, 600, "VulkanTutorial", nullptr, nullptr);
 
-    return EXIT_SUCCESS;
+    uint32_t extensionCount = 0;
+    if (vkEnumerateInstanceExtensionProperties(nullptr, &extensionCount, nullptr) != VkResult::VK_SUCCESS)
+        std::cout << "Failed to get extensions" << std::endl;
+
+    while (!glfwWindowShouldClose(window))
+        glfwPollEvents();
+
+    glfwDestroyWindow(window);
+
+    glfwTerminate();
 }
